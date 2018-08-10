@@ -1,29 +1,42 @@
-import React from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
-import Routes from './Routes';
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      response: '',
+    };
+  }
 
-import reactLogo from './assets/React-icon.png';
+  componentDidMount() {
+    fetch('http://localhost:8080')
+      .then(response => response.json())
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+  }
 
-const App = () => (
-  <BrowserRouter>
-    <main className="container">
-      <div>
-        <h1>hello world!</h1>
-        <img className="container__image" alt="react logo" src={reactLogo} />
-        <p>If you see this everything is working!</p>
+  // callApi() {
+  //   fetch("api/hello
+  // }
+  // callApi = async () => {
+  //   const response = await fetch("/api/hello");
+  //   const body = await response.json();
+  //
+  //   if (response.status !== 200) throw Error(body.message);
+  //
+  //   return body;
+  // };
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">{this.state.response}</p>
       </div>
-      <ul className="left">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-      </ul>
-      <Routes />
-    </main>
-  </BrowserRouter>
-);
+    );
+  }
+}
 
 export default App;
