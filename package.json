@@ -10,7 +10,7 @@
   },
   "scripts": {
     "backend": "realize server/main.go",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "dev": "concurrently --kill-others \"realize start --path='server' --run --server --no-config\" \"cross-env NODE_ENV=development webpack-dev-server\"",
     "build": "cross-env NODE_ENV=production webpack",
     "test": "jest --coverage"
   },
@@ -70,6 +70,7 @@
     "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
+    "concurrently": "^3.6.1",
     "fs-extra": "^5.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.0.0",
