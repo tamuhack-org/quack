@@ -1,24 +1,63 @@
 package main
 
 import (
-  "os"
+	"encoding/json"
 	"fmt"
-
 	"net/http"
+	"os"
+	"time"
 
-  "github.com/gorilla/mux"
-  "github.com/gorilla/handlers"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
+
+type Message struct {
+	Text       string
+	ReceivedAt time.Time
+}
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", HomeHandler)
-  loggedRouter := handlers.LoggingHandler(os.Stdout, r)
-  fmt.Println("Listening in port :8080\n...")
-  http.ListenAndServe(":8080", loggedRouter)
+	
+	// Get for testing.
+	r.HandleFunc("/", HomeHandler).Methods("GET")
+
+	// Logins should only be accepted as a POST.
+	r.HandleFunc("/login", LoginHandler).Methods("POST")
+
+	// Middleware to add log data to Stdout.
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
+
+	fmt.Println("Listening in port :8080\n...")
+	http.ListenAndServe(":8080", loggedRouter)
+}
+
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	msg := Message{}
+
+	// Parse json into our message struct.
+	err := json.NewDecoder(r.Body).Decode(&msg)
+	if err != nil {
+		panic(err)
+	}
+
+	// Test message is populated with time.
+	msg.ReceivedAt = time.Now().Local()
+	msgJson, err := json.Marshal(msg)
+	if err != nil {
+		panic(err)
+	}
+
+	// Make the response a little more legit.
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(msgJson)
+	fmt.Println("Calculated data!")
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	// Simple response for now.
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-  fmt.Println("Hello")
+	w.Write([]byte("here's some data that needs to be encyrpted with sessions: chicken"))
 }
