@@ -1,14 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
-
-const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-  template: path.join(__dirname, '/src/index.html'),
-  filename: 'index.html',
-  inject: 'body',
-});
 
 const DefinePluginConfig = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify('production'),
@@ -50,13 +43,12 @@ module.exports = {
   },
   output: {
     filename: 'index.js',
-    path: path.join(__dirname, '/src/build'),
+    path: path.join(__dirname, '../static'),
   },
   mode: dev ? 'development' : 'production',
   plugins: dev
     ? [
-      HTMLWebpackPluginConfig,
       new webpack.HotModuleReplacementPlugin(),
     ]
-    : [HTMLWebpackPluginConfig, DefinePluginConfig],
+    : [DefinePluginConfig],
 };

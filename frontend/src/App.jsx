@@ -4,14 +4,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: '',
+      response: 'not loaded',
     };
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080')
+    console.log('hello chicken nugget')
+    fetch('https://quack.tamuhack.org/test')
       .then(response => response.json())
-      .then(res => this.setState({ response: res.express }))
+      .then(this.setState({ response: 'I received a message' }))
       .catch(err => console.log(err));
   }
 

@@ -12,18 +12,24 @@ import (
 )
 
 type Message struct {
-	Text       string
-	ReceivedAt time.Time
+	Text     string
+	Received time.Time
 }
 
 func main() {
-	r := mux.NewRouter()
-	
+	r := mux.NewRouter().StrictSlash(true)
+
 	// Get for testing.
-	r.HandleFunc("/", HomeHandler).Methods("GET")
+	// r.HandleFunc("/", HomeHandler).Methods("GET")
 
 	// Logins should only be accepted as a POST.
 	r.HandleFunc("/login", LoginHandler).Methods("POST")
+
+	// Logins should only be accepted as a POST.
+	r.HandleFunc("/test", TestHandler).Methods("GET")
+
+	// serve index.html in the static/ directory.
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 
 	// Middleware to add log data to Stdout.
 	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
@@ -42,7 +48,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Test message is populated with time.
-	msg.ReceivedAt = time.Now().Local()
+	msg.Received = time.Now().Local()
 	msgJson, err := json.Marshal(msg)
 	if err != nil {
 		panic(err)
@@ -56,8 +62,21 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	// Simple response for now.
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("here's some data that needs to be encyrpted with sessions: chicken"))
+}
+
+func TestHandler(w http.ResponseWriter, r *http.Request) {
+  msg := &Message{Text: "Alex", Received: time.Now().Local()}
+
+  js, err := json.Marshal(msg)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(js)
 }
