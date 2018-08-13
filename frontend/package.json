@@ -9,7 +9,7 @@
     "url": "git://github.com/jay-khatri/quack"
   },
   "scripts": {
-    "dev": "cross-env-shell API_URL=http://localhost:8080 NODE_ENV=development webpack-dev-server",
+    "dev": "cross-env API_URL=http://localhost:8080 NODE_ENV=development webpack-dev-server --hot --inline",
     "build": "cross-env --env.API_URL=https://quack.tamuhack.org NODE_ENV=production webpack",
     "test": "jest --coverage"
   },
@@ -46,7 +46,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "cross-env": "^5.1.1",
+    "concurrently": "^3.6.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -66,8 +67,7 @@
     "url-loader": "^0.6.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9",
-    "webpack-dev-server": "^3.1.0",
-    "concurrently": "^3.6.1"
+    "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
     "fs-extra": "^5.0.0",
