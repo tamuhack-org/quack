@@ -1,0 +1,28 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+server:
+  status: true
+  open: false
+  port: 5002
+  host: localhost
+schema:
+- name: quack
+  path: .
+  env:
+    MONGO_URL: hello
+    HOSTNAME: hello
+    SECRET_KEY: hello
+  commands:
+    run:
+      status: true
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor

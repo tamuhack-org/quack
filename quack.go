@@ -9,13 +9,11 @@ import (
   // MVC-like routes.
 	// "backend/shared/route"
   // MongoDB API implementation.
-	// "backend/shared/database"
+	"github.com/tamuhack-org/quack/backend/shared/database"
   // Our emailing logic (sendgrid?).
 	// "backend/shared/email"
   // Environment configuration and net/http server.
 	// "backend/shared/server"
-  // Managing user tokens and sessions.
-	"github.com/tamuhack-org/quack/backend/shared/session"
   // Reading in environmental variables.
 	"github.com/tamuhack-org/quack/backend/shared/config"
 )
@@ -32,12 +30,14 @@ func main() {
 	// Load in environmental vars, which populate a config struct.
   c := config.LoadFromEnv()
 
-	// Configure the session cookie store
-  session.Configure(c.SecretKey)
-
-  fmt.Println(c.MongoUrl)
 	// Connect to database
-	// database.Connect(config.Database)
+  db, err := database.CreateAndConnect(c.MongoUrl)
+	if err != nil {
+    log.Fatal("There was an error connecting with the database", err)
+	}
+
+
+  fmt.Println(db)
 
 	// Start the server, legggggggggooooooooo.
 	// server.Run(route.LoadHTTP(), route.LoadHTTPS(), config.Server)
