@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  test-routine:
+		working_directory: /go/src/github.com/tamuhack-org/jay-khatri
+		docker:
+			- image: circleci/golang:1.10.0
+		environment:
+			- DEP_VERSION: 0.4.1
+		steps:
+			- checkout
+			- run:
+					name: test
+					command: |
+						mkdir -p $GOCACHE
+						go build -v
+						go test -p 6 -race ./...
+workflows:
+	version: 2
+	test_and_build:
+		jobs:
+			- test-routine
+
