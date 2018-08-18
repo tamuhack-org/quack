@@ -37,7 +37,10 @@ workflows:
   version: 2
   test_and_build:
     jobs:
-      - build-deploy-routine
+      - build-deploy-routine:
+          filters:
+            branches:
+              only: master
       - test-routine
 
 
