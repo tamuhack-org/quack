@@ -4,12 +4,13 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+  "fmt"
 )
 
 // NotepadCreatePOST handles the note creation form submission
 func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
 	if ok := validateEmail(r); !ok {
-		http.Error(w, "Error validating POST", 400)
+		http.Error(w, "", 400)
 	}
 
 	// Get email to update, and log it for now.
@@ -23,6 +24,7 @@ func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
 
 // Regex to validate that the input email is valid.
 func validateEmail(r *http.Request) bool {
+  fmt.Println(r.FormValue("email"))
 	re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 	return re.MatchString(r.FormValue("email"))
 }
