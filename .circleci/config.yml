@@ -8,6 +8,11 @@ jobs:
       - DEP_VERSION: 0.4.1
     steps:
       - checkout
+      - run:
+        name: test
+          command: |
+            go build -v
+            go test -p 6 -race ./...
 workflows:
   version: 2
   test_and_build:
