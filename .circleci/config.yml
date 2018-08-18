@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  test-routine:
+    docker:
+      - image: circleci/golang:1.10.0
+    working_directory: /go/src/github.com/tamuhack-org/quack
+    environment:
+      - DEP_VERSION: 0.4.1
+    steps:
+      - checkout
+      - run: go get github.com/gorilla/handlers
+      - run: go get github.com/gorilla/mux
+      - run: go get github.com/globalsign/mgo
+      - run:
+          name: test
+          command: |
+              go build -v
+              go test -p 6 -race ./...
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - test-routine
+
