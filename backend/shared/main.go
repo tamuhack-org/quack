@@ -29,7 +29,7 @@ func main() {
 	r.HandleFunc("/test", TestHandler).Methods("GET")
 
 	// serve index.html in the static/ directory.
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist")))
 
 	// Middleware to add log data to Stdout.
 	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
