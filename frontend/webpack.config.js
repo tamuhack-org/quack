@@ -39,7 +39,7 @@ module.exports = {
   },
   output: {
     filename: "index.js",
-    path: path.join(__dirname, "../static")
+    path: path.join(__dirname, "/dist")
   },
   mode: dev ? "development" : "production",
   plugins: dev

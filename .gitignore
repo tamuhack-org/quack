@@ -24,6 +24,8 @@ node_modules
 .npm
 
 # Prod Bundle
-build
+build/
+bin/
+frontend/dist/index.js
 
 

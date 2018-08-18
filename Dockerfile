@@ -1,30 +1,33 @@
-FROM golang:1.8.3 as go_builder
-WORKDIR /go/src/github.com/jay-khatri/quack
+# 1) BUILD GO BINARY
+FROM golang:alpine as build-go
+RUN apk --no-cache add git bzr mercurial
+ENV D=/go/src/github.com/tamuhack-org/quack
 RUN go get -d -v golang.org/x/net/html
 RUN go get -d -v github.com/gorilla/handlers
 RUN go get -d -v github.com/gorilla/mux
-COPY ./main.go  .
-ADD static/ static/
+COPY ./main.go $D/main.go
+COPY ./frontend/dist $D/frontend/dist
+RUN rm -rf $D/frontend/dist/index.html
+RUN rm -rf $D/frontend/dist/index.js
+RUN cd $D && go build -o main && cp main /tmp/
+
+# 2) BUILD UI
+FROM node:alpine AS build-node 
+RUN mkdir -p /src/ui
+COPY ./frontend/package.json /src/ui/
+RUN cd /src/ui && yarn install
+COPY ./frontend /src/ui
 # Replace the dev instance of index.html with the prod version.
-RUN rm -rf static/index.html
-RUN mv static/index-prod.html static/index.html
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o quack .
+RUN rm -rf /src/ui/dist/index.html
+RUN mv /src/ui/dist/index-prod.html /src/ui/dist/index.html
+RUN cd /src/ui && yarn build
 
-
-FROM node:7 as node_builder
-WORKDIR /go/src/github.com/jay-khatri/quack/frontend
-ADD /frontend .
-RUN rm -rf node_modules
-RUN yarn install
-RUN yarn run build
-
-
-FROM alpine:latest
+# 3) BUILD FINAL IMAGE
+FROM alpine
 RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-# Copy dependant files from go builder.
-COPY --from=go_builder /go/src/github.com/jay-khatri/quack/quack .
-COPY --from=go_builder /go/src/github.com/jay-khatri/quack/static/index.html ./static/index.html
-# Copy dependant files from node builder.
-COPY --from=node_builder /go/src/github.com/jay-khatri/quack/static/index.js ./static/index.js
-CMD ["./quack"]
+WORKDIR /app/server/
+COPY --from=build-go /tmp/main /app/server/
+COPY --from=build-node /src/ui/dist /app/server/frontend/dist
+EXPOSE 8080
+CMD ["./main"]
+
