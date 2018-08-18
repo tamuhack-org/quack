@@ -20,7 +20,7 @@ var EmailSignupPOSTTests = []struct {
 func TestEmailSignupPOST(t *testing.T) {
 	// Request body.
 	for _, tt := range EmailSignupPOSTTests {
-    str := "email=" + tt.email
+		str := "email=" + tt.email
 		reader := strings.NewReader(str)
 
 		// Create a request to pass to our handler.
