@@ -1,8 +1,8 @@
 package database
 
 import (
-	"time"
 	"github.com/globalsign/mgo"
+	"time"
 )
 
 // Database object holds a pointer to a session.
@@ -25,6 +25,6 @@ func CreateAndConnect(url string) (*Database, error) {
 		return nil, err
 	}
 
-  obj := Database{session: db}
+	obj := Database{session: db}
 	return &obj, nil
 }

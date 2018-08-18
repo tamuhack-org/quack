@@ -68,9 +68,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestHandler(w http.ResponseWriter, r *http.Request) {
-  msg := &Message{Text: "Alex", Received: time.Now().Local()}
+	msg := &Message{Text: "Alex", Received: time.Now().Local()}
 
-  js, err := json.Marshal(msg)
+	js, err := json.Marshal(msg)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

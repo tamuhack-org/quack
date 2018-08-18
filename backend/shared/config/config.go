@@ -1,8 +1,10 @@
 package config
 
-import "os"
+import (
+	"os"
+	"strconv"
+)
 
-// Parser must implement ParseJSON
 type Config struct {
 	MongoUrl  string `json:"MongoUrl"`
 	MongoName string `json:"MongoName"`
@@ -12,12 +14,18 @@ type Config struct {
 }
 
 // Load the JSON config file
-func LoadFromEnv() Config {
-	return Config{
-    Port:      5000,
+func LoadFromEnv() (*Config, error) {
+  // Set a default port if it hasn't been specified.
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err != nil {
+		port = 8080
+	}
+
+	return &Config{
+		Port:      port,
 		MongoUrl:  os.Getenv("MONGO_URL"),
 		MongoName: os.Getenv("MONGO_NAME"),
 		Hostname:  os.Getenv("HOSTNAME"),
 		SecretKey: os.Getenv("SECRET_KEY"),
-	}
+	}, nil
 }
