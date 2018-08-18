@@ -15,7 +15,9 @@ func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
 
 	// Get email to update, and log it for now.
 	content := r.FormValue("email")
+	log.Println("----------------------------------------------")
 	log.Println(content)
+	log.Println("----------------------------------------------")
 
 	// Success!
 	w.Header().Set("Content-Type", "application/json")
