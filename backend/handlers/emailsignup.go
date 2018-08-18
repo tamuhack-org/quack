@@ -7,7 +7,7 @@ import (
 	"regexp"
 )
 
-// NotepadCreatePOST handles the note creation form submission
+// EmailSignupPost handles the email form submission
 func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
 	if ok := validateEmail(r); !ok {
 		http.Error(w, "", 400)
