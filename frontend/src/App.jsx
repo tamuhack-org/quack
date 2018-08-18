@@ -23,7 +23,7 @@ class App extends Component {
     return (
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Welcome to tamuhack's new registration thingy (here's another update)</h1>
+            <h1 className="App-title">Welcome to (chicken nugget) tamuhack's new registration thingy (This was done on circleci!!)</h1>
           </header>
           <p className="App-intro">{this.state.response}</p>
         </div>
