@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: test
-            command: |
+          command: |
               go build -v
               go test -p 6 -race ./...
 workflows:
