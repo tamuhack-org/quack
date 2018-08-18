@@ -8,6 +8,8 @@ jobs:
       - DEP_VERSION: 0.4.1
     steps:
       - checkout
+      - run: go get github.com/gorilla/handlers
+      - run: go get github.com/gorilla/mux
       - run:
           name: test
           command: |
