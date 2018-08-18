@@ -10,6 +10,7 @@ jobs:
       - checkout
       - run: go get github.com/gorilla/handlers
       - run: go get github.com/gorilla/mux
+      - run: go get github.com/globalsign/mgo
       - run:
           name: test
           command: |
