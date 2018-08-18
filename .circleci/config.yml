@@ -9,10 +9,10 @@ jobs:
     steps:
       - checkout
       - run:
-        name: test
-          command: |
-            go build -v
-            go test -p 6 -race ./...
+          name: test
+            command: |
+              go build -v
+              go test -p 6 -race ./...
 workflows:
   version: 2
   test_and_build:
