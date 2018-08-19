@@ -15,7 +15,7 @@ func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if ok := validateEmail(r); !ok {
-		http.Error(w, "something went wrong", 400)
+		http.Error(w, "", 400)
 	}
 
 	// Get email to update, and log it for now.
