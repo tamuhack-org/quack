@@ -23,13 +23,11 @@ func init() {
 }
 
 func main() {
-	// Load in environmental vars, which populate a config struct.
+	// Load in environmental vars, which populate a config* struct.
 	c, err := config.LoadFromEnv()
   if err != nil {
     log.Fatal("There was an error reading in the config file", err)
   }
-  hostname := c.Hostname
-  port := c.Port
 
 	// Connect to the database.
 	// db, err := database.CreateAndConnect(c.MongoUrl)
@@ -38,5 +36,5 @@ func main() {
 	// }
 
 	// Start the server, legggggggggooooooooo.
-	server.Run(route.Load(), hostname, port)
+	server.Run(route.Load(), c)
 }
