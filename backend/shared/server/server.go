@@ -11,7 +11,7 @@ import (
 )
 
 // Run starts the HTTP server.
-func Run(handlers http.Handler, config *config.Config ) {
+func Run(handlers http.Handler, config *config.Config) {
 	addr := httpAddress(config.Hostname, config.Port)
 	fmt.Println(time.Now().Format("2006-01-02 03:04:05 PM"), addr)
 

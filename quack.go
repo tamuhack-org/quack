@@ -25,9 +25,9 @@ func init() {
 func main() {
 	// Load in environmental vars, which populate a config* struct.
 	c, err := config.LoadFromEnv()
-  if err != nil {
-    log.Fatal("There was an error reading in the config file", err)
-  }
+	if err != nil {
+		log.Fatal("There was an error reading in the config file", err)
+	}
 
 	// Connect to the database.
 	// db, err := database.CreateAndConnect(c.MongoUrl)
