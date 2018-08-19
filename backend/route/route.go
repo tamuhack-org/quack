@@ -27,13 +27,13 @@ func routes() http.Handler {
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist")))
 
 	// Wrap the router with middleware for logging.
-  loggingHandler := h.LoggingHandler(os.Stdout, r)
+	loggingHandler := h.LoggingHandler(os.Stdout, r)
 
-  // For handling cross origin scripting (TODO(jaykhatri) this isn't secure)
+	// For handling cross origin scripting (TODO(jaykhatri) this isn't secure)
 	headersOk := h.AllowedHeaders([]string{"X-Requested-With"})
 	originsOk := h.AllowedOrigins([]string{"*"})
 	methodsOk := h.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
-  // Wrap in a prebuild cors handler.
-	return h.CORS(originsOk, headersOk, methodsOk)(loggingHandler);
+	// Wrap in a prebuild cors handler.
+	return h.CORS(originsOk, headersOk, methodsOk)(loggingHandler)
 }
