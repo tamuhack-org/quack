@@ -9,8 +9,8 @@ import (
 
 // EmailSignupPost handles the email form submission
 func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
-  // NOTE: We must write the return header right away. 
-  // i.e. This code block needs to happen first.
+	// NOTE: We must write the return header right away.
+	// i.e. This code block needs to happen first.
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 
