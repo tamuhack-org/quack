@@ -30,7 +30,7 @@ func TestEmailSignupPOST(t *testing.T) {
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-		// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+		// We create a ResponseRecorder (which satisfies http.ResponseWriter) to poll/look-at the response.
 		resp := httptest.NewRecorder()
 		handler := http.HandlerFunc(EmailSignupPOST)
 
@@ -38,10 +38,9 @@ func TestEmailSignupPOST(t *testing.T) {
 		// directly and pass in our Request and ResponseRecorder.
 		handler.ServeHTTP(resp, req)
 
-		// Check the status code is what we expect.
-		if status := resp.Code; status != tt.wantCode {
+		if got, want := resp.Code, tt.wantCode; got != want {
 			t.Errorf("handler returned wrong status code: got %v want %v",
-				status, http.StatusOK)
+				got, want)
 		}
 	}
 }

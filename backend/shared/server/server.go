@@ -5,17 +5,14 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	// Reading in environmental variables.
+	"github.com/tamuhack-org/quack/backend/shared/config"
 )
 
-// Server stores the hostname and port number.
-type Server struct {
-	Hostname string `json:"Hostname"`
-	HTTPPort int    `json:"HTTPPort"`
-}
-
-// Run starts the HTTP.
-func Run(handlers http.Handler, hostname string, port int) {
-	addr := httpAddress(hostname, port)
+// Run starts the HTTP server.
+func Run(handlers http.Handler, config *config.Config) {
+	addr := httpAddress(config.Hostname, config.Port)
 	fmt.Println(time.Now().Format("2006-01-02 03:04:05 PM"), addr)
 
 	// Start the HTTP listener, and catch.
