@@ -5,6 +5,7 @@ ENV D=/go/src/github.com/tamuhack-org/quack
 RUN go get -d -v golang.org/x/net/html
 RUN go get -d -v github.com/gorilla/handlers
 RUN go get -d -v github.com/gorilla/mux
+RUN go get -d -v github.com/globalsign/mgo
 COPY ./quack.go $D/quack.go
 COPY ./backend/ $D/backend/
 COPY ./frontend/dist $D/frontend/dist
