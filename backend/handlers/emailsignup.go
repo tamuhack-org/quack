@@ -5,21 +5,32 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+
+	"github.com/tamuhack-org/quack/backend/shared/database"
+  "github.com/globalsign/mgo/bson"
 )
 
 // EmailSignupPost handles the email form submission
 func EmailSignupPOST(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+  // Grab the collection that holds all of our sign up emails.
+  signups := database.Mongo.DB("").C("email-signups")
 
+  // Set header to form data, and validate a correct email.
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	if ok := validateEmail(r); !ok {
-		http.Error(w, "", 400)
+		http.Error(w, "Invalid email", 400)
 	}
 
-	// Get email to update, and log it for now.
-	content := r.FormValue("email")
-	log.Println("----------------------------------------------")
-	log.Println(content)
-	log.Println("----------------------------------------------")
+	// Get email to update, and write to DB.
+	email := r.FormValue("email")
+  if _, err := signups.Upsert(bson.M{"email": email}, bson.M{"$set": bson.M{"email": email}}); err != nil {
+		http.Error(w, "Error writing email to the database.", 400)
+  }
+
+  // Log for debugging purposes.
+  log.Println("=========================")
+  log.Println("Wrote " + email + " to database.")
+  log.Println("=========================")
 }
 
 // Regex to validate that the input email is valid.
