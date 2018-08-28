@@ -15,7 +15,7 @@
   -`realize start --run --server --no-config`
 - This should start a server on `http://localhost:8080`
 - To set up a local version of the database, put this in your .bashrc or .zshrc:
-  - `export 
+  - `export MONGO_URL="mongodb://<database-user>:<datababse-password>@ds037165.mlab.com:37165/<database-name>"`
 
 ### Frontend dev-environment instructions:
 - Make sure you have the following dependecies/versions:
