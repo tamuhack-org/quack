@@ -28,8 +28,9 @@ func LoadFromEnv() (*Config, error) {
 	if len(mongoUrl) <= 0 {
 		return nil, errors.New("No database url specified!\n")
 	}
+
 	log.Println("----------------------------------------------------------")
-	log.Println("Starting server on port " + os.Getenv("PORT") + " with url " + mongoUrl)
+  log.Println("Starting server on port :" + strconv.Itoa(port) + " with url " + mongoUrl)
 	log.Println("----------------------------------------------------------")
 
 	return &Config{
