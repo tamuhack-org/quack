@@ -31,8 +31,5 @@ func LoadFromEnv() (*Config, error) {
 	return &Config{
 		Port:      port,
 		MongoUrl:  mongoUrl,
-		MongoName: os.Getenv("MONGO_NAME"),
-		Hostname:  os.Getenv("HOSTNAME"),
-		SecretKey: os.Getenv("SECRET_KEY"),
 	}, nil
 }
