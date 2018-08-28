@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"os"
 	"strconv"
 )
@@ -13,12 +14,18 @@ type Config struct {
 	Port      int    `json:"Port"`
 }
 
-// Load the JSON config file
+// Load the JSON config file.
 func LoadFromEnv() (*Config, error) {
-  // Set a default port if it hasn't been specified.
+	// Set a default port if it hasn't been specified.
 	port, err := strconv.Atoi(os.Getenv("PORT"))
 	if err != nil {
 		port = 8080
+	}
+
+	// User must specify a database url.
+	mongoUrl, err := strconv.Atoi(os.Getenv("MONGO_URL"))
+	if err != nil {
+		return nil, errors.New("No database url specified!")
 	}
 
 	return &Config{
