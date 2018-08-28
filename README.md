@@ -2,7 +2,9 @@
 ## Quackity quack quack.
 
 ### Backend dev-environment instructions:
-- Set up a standard go environment with something like this: https://medium.com/@AkyunaAkish/setting-up-a-golang-development-environment-mac-os-x-d58e5a7ea24f (should be easy to find instructions for PC)
+- Set up a standard go environment with something like this: 
+  https://medium.com/@AkyunaAkish/setting-up-a-golang-development-environment-mac-os-x-d58e5a7ea24f 
+  (should be easy to find instructions for PC)
 - Run `go get github.com/tamuhack-org-quack`
 - `cd` into that ^ directory and run:
   - `go get github.com/oxequa/realize`
@@ -12,6 +14,8 @@
 - Finally, in a seperate terminal window, but in the same directory, run:
   -`realize start --run --server --no-config`
 - This should start a server on `http://localhost:8080`
+- To set up a local version of the database, put this in your .bashrc or .zshrc (talk to jay for credentials):
+  - `export MONGO_URL="mongodb://<database-user>:<datababse-password>@ds037165.mlab.com:37165/<database-name>"`
 
 ### Frontend dev-environment instructions:
 - Make sure you have the following dependecies/versions:
