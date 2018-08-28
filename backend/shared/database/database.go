@@ -5,26 +5,27 @@ import (
 	"time"
 )
 
-// Database object holds a pointer to a session.
-type Database struct {
-	// Database type
-	session *mgo.Session
-}
+// This is a persistent session that's accessed by our handlers.
+var (
+	Mongo *mgo.Session
+)
 
 // [Constructor] Connect to the database
-func CreateAndConnect(url string) (*Database, error) {
+func CreateAndConnect(url string) error {
+	var err error
 	// Dial connects to the remote db.
-	db, err := mgo.DialWithTimeout(url, 5*time.Second)
-	if err != nil {
-		return nil, err
+	if Mongo, err = mgo.DialWithTimeout(url, 5*time.Second); err != nil {
+		return err
 	}
 
 	// Set timeout and check that its alive.
-	db.SetSocketTimeout(1 * time.Second)
-	if err = db.Ping(); err != nil {
-		return nil, err
+	Mongo.SetSocketTimeout(1 * time.Second)
+	if err = Mongo.Ping(); err != nil {
+		return err
+	}
+	if err = Mongo.Ping(); err != nil {
+		return err
 	}
 
-	obj := Database{session: db}
-	return &obj, nil
+  return nil
 }

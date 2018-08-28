@@ -23,14 +23,14 @@ func LoadFromEnv() (*Config, error) {
 	}
 
 	// User must specify a database url.
-	mongoUrl, err := strconv.Atoi(os.Getenv("MONGO_URL"))
-	if err != nil {
-		return nil, errors.New("No database url specified!")
+	mongoUrl := os.Getenv("MONGO_URL")
+	if len(mongoUrl) <= 0 {
+		return nil, errors.New("No database url specified!\n")
 	}
 
 	return &Config{
 		Port:      port,
-		MongoUrl:  os.Getenv("MONGO_URL"),
+		MongoUrl:  mongoUrl,
 		MongoName: os.Getenv("MONGO_NAME"),
 		Hostname:  os.Getenv("HOSTNAME"),
 		SecretKey: os.Getenv("SECRET_KEY"),

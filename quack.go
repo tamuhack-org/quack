@@ -11,7 +11,7 @@ import (
 	// Reading in environmental variables.
 	"github.com/tamuhack-org/quack/backend/shared/config"
 	// MongoDB API implementation.
-	// "github.com/tamuhack-org/quack/backend/shared/database"
+	"github.com/tamuhack-org/quack/backend/shared/database"
 )
 
 func init() {
@@ -26,14 +26,14 @@ func main() {
 	// Load in environmental vars, which populate a config* struct.
 	c, err := config.LoadFromEnv()
 	if err != nil {
-		log.Fatal("There was an error reading in the config file", err)
+		log.Fatal("There was an error reading in the config file\n", err)
 	}
 
-	// Connect to the database.
-	// db, err := database.CreateAndConnect(c.MongoUrl)
-	// if err != nil {
-	//   log.Fatal("There was an error connecting with the database", err)
-	// }
+	// Connect to the database (this writes to a local variable in databse.go)
+	err = database.CreateAndConnect(c.MongoUrl)
+	if err != nil {
+		log.Fatal("There was an error connecting with the database", err)
+	}
 
 	// Start the server, legggggggggooooooooo.
 	server.Run(route.Load(), c)
