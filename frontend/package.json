@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "cross-env API_URL=http://localhost:8080 NODE_ENV=development webpack-dev-server --hot --inline",
-    "build": "cross-env --env.API_URL=https://quack.tamuhack.org NODE_ENV=production webpack",
+    "build": "cross-env --env.API_URL=https://quack.tamuhack.com NODE_ENV=production webpack",
     "test": "jest --coverage"
   },
   "jest": {
@@ -79,6 +79,6 @@
   "bugs": {
     "url": "https://github.com/jay-khatri/quack/issues"
   },
-  "homepage": "https://github.com/jay-khatri/quack",
+  "homepage": "https://quack.tamuhack.com",
   "keywords": []
 }
