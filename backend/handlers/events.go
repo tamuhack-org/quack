@@ -18,10 +18,10 @@ func EventsGET(w http.ResponseWriter, r *http.Request) {
 	// Global config from env vars.
 	globalConfig := config.GlobalConfig
 
-  url := globalConfig.EventbriteUrl + "/users/me/owned_events/"
+	url := globalConfig.EventbriteUrl + "/users/me/owned_events/"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		// TODO return a status
+		http.Error(w, "Error building request.", 400)
 	}
 
 	query := req.URL.Query()
@@ -30,13 +30,13 @@ func EventsGET(w http.ResponseWriter, r *http.Request) {
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Error hitting the eventbrite API.", 400)
+	}
 	body, err := ioutil.ReadAll(resp.Body)
-
-	log.Println("=========================")
-	log.Println("Events handler!")
-	log.Println(globalConfig.EventbriteToken)
-	log.Println(globalConfig.EventbriteUrl)
-	log.Println("=========================")
+	if err != nil {
+		http.Error(w, "Error parsing the eventbrite API response.", 400)
+	}
 
 	w.Write(body)
 }
