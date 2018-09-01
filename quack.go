@@ -23,18 +23,20 @@ func init() {
 }
 
 func main() {
-	// Load in environmental vars, which populate a config* struct.
-	c, err := config.LoadFromEnv()
+	// Load in environmental vars into a in-memory struct (see config.go)
+	// Note: this object is read directly from this file, and can be imported in a package.
+	// e.g. database.go
+	err := config.LoadFromEnv()
 	if err != nil {
 		log.Fatal("There was an error reading in the config file\n", err)
 	}
 
 	// Connect to the database (this writes to a local variable in databse.go)
-	err = database.CreateAndConnect(c.MongoUrl)
+	err = database.CreateAndConnect()
 	if err != nil {
 		log.Fatal("There was an error connecting with the database", err)
 	}
 
 	// Start the server, legggggggggooooooooo.
-	server.Run(route.Load(), c)
+	server.Run(route.Load())
 }
