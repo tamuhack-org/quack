@@ -18,16 +18,19 @@ func EventsGET(w http.ResponseWriter, r *http.Request) {
 	// Global config from env vars.
 	globalConfig := config.GlobalConfig
 
+  // Build the initial request.
 	url := globalConfig.EventbriteUrl + "/users/me/owned_events/"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		http.Error(w, "Error building request.", 400)
 	}
 
+  // Add the token to the request params.
 	query := req.URL.Query()
 	query.Add("token", globalConfig.EventbriteToken)
 	req.URL.RawQuery = query.Encode()
 
+  // Perform request and handle errors.
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
