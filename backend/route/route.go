@@ -23,6 +23,9 @@ func routes() http.Handler {
 	// Route for collecting emails on the show page!
 	r.HandleFunc("/email-signup", handlers.EmailSignupPOST).Methods("POST")
 
+	// Route for returning all of our events.
+	r.HandleFunc("/events", handlers.EventsGET).Methods("GET")
+
 	// For serving our static assets.
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist")))
 
