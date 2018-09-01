@@ -1,8 +1,7 @@
 package handlers
 
 import (
-	"fmt"
-	"log"
+	"io/ioutil"
 	"net/http"
 
 	// Reading in environmental variables.
@@ -17,11 +16,28 @@ func EventsGET(w http.ResponseWriter, r *http.Request) {
 	// Global config from env vars.
 	globalConfig := config.GlobalConfig
 
-	log.Println("=========================")
-	log.Println("Events handler!")
-	log.Println(globalConfig.EventbriteToken)
-	log.Println(globalConfig.EventbriteUrl)
-	log.Println("=========================")
+	// Build the initial request.
+	url := globalConfig.EventbriteUrl + "/users/me/owned_events/"
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		http.Error(w, "Error building request.", 400)
+	}
 
-	fmt.Fprintf(w, "Events handler!")
+	// Add the token to the request params.
+	query := req.URL.Query()
+	query.Add("token", globalConfig.EventbriteToken)
+	req.URL.RawQuery = query.Encode()
+
+	// Perform request and handle errors.
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Error hitting the eventbrite API.", 400)
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Error parsing the eventbrite API response.", 400)
+	}
+
+	w.Write(body)
 }
