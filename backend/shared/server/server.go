@@ -12,7 +12,7 @@ import (
 
 // Run starts the HTTP server.
 func Run(handlers http.Handler, config *config.Config) {
-	addr := fmt.Sprintf("%d", config.Port)
+  addr := fmt.Sprintf(":%d", config.Port)
 	fmt.Println(time.Now().Format("2006-01-02 03:04:05 PM"), addr)
 
 	// Start the HTTP listener, and catch.
