@@ -37,6 +37,7 @@ func LoadFromEnv() (*Config, error) {
 
 	log.Println("----------------------------------------------------------")
 	log.Println("Starting server on port :" + strconv.Itoa(port) + " with url " + mongoUrl)
+	log.Println("Eventbrite Url is " + eventbriteUrl + " and Eventbrite Token is " + eventbriteToken)
 	log.Println("----------------------------------------------------------")
 
 	return &Config{
