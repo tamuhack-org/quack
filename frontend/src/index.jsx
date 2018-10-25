@@ -5,8 +5,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './App.js';
-
-import './style.scss';
+import "antd/dist/antd.css";
 
 const root = document.getElementById('root');
 
