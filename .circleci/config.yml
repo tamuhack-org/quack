@@ -16,6 +16,8 @@ jobs:
           command: |
               go build -v
               go test -p 6 -race ./...
+      - setup_remote_docker
+      - run: docker build --rm=false -t gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1 .
   build-deploy-routine:
     docker:
       - image: google/cloud-sdk
