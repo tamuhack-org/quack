@@ -36,4 +36,3 @@ func RegistrationPOST(w http.ResponseWriter, r *http.Request) {
 	log.Println("Wrote " + firstName + " " + lastName + " to database.")
 	log.Println("=========================")
 }
-
