@@ -20,8 +20,11 @@ func routes() http.Handler {
 	// Define a new router.
 	r := mux.NewRouter().StrictSlash(true)
 
+	// Route for registering for tamuhack.
+	//r.HandleFunc("/registration", handlers.RegistrationPOST).Methods("POST")
+
 	// Route for collecting emails on the show page!
-	r.HandleFunc("/email-signup", handlers.EmailSignupPOST).Methods("POST")
+	r.HandleFunc("/email-signup", handlers.RegistrationPOST).Methods("POST")
 
 	// Route for returning all of our events.
 	r.HandleFunc("/events", handlers.EventsGET).Methods("GET")
