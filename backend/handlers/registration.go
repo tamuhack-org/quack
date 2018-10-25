@@ -26,7 +26,7 @@ func RegistrationPOST(w http.ResponseWriter, r *http.Request) {
 	log.Println("Got " + firstName + " " + lastName + " from frontend.")
 	log.Println("=========================")
 
-	if _, err := signups.Upsert(bson.M{"first_name": lastName}, bson.M{"$set": bson.M{"last_name": lastName}}); err != nil {
+	if _, err := signups.Upsert(bson.M{"first_name": firstName}, bson.M{"$set": bson.M{"last_name": lastName}}); err != nil {
 		http.Error(w, "Error writing data to the database.", 400)
 		return
 	}
