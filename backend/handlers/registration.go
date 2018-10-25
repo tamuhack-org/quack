@@ -1,10 +1,8 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"regexp"
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/tamuhack-org/quack/backend/shared/database"
@@ -20,13 +18,14 @@ func RegistrationPOST(w http.ResponseWriter, r *http.Request) {
 	// Set header to form data, and validate a correct email.
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 
+	// Get email to update, and write to DB.
+	firstName := r.FormValue("first_name")
+	lastName := r.FormValue("last_name")
+
 	log.Println("=========================")
 	log.Println("Got " + firstName + " " + lastName + " from frontend.")
 	log.Println("=========================")
 
-	// Get email to update, and write to DB.
-	firstName := r.FormValue("first_name")
-	lastName := r.FormValue("last_name")
 	if _, err := signups.Upsert(bson.M{"first_name": lastName}, bson.M{"$set": bson.M{"last_name": lastName}}); err != nil {
 		http.Error(w, "Error writing data to the database.", 400)
 		return

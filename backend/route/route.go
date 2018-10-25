@@ -21,7 +21,7 @@ func routes() http.Handler {
 	r := mux.NewRouter().StrictSlash(true)
 
 	// Route for registering for tamuhack.
-	//r.HandleFunc("/registration", handlers.RegistrationPOST).Methods("POST")
+  r.HandleFunc("/registration", handlers.RegistrationPOST).Methods("POST")
 
 	// Route for collecting emails on the show page!
 	r.HandleFunc("/email-signup", handlers.RegistrationPOST).Methods("POST")
