@@ -9,7 +9,7 @@ class FormPage extends Component {
       <Flex alignItems="center" justifyContent="center"
           css={{
             width: "100vw",
-            height: "100vh",
+            minHeight: "100vh",
           }}
       >
         <RegistrationForm/>
