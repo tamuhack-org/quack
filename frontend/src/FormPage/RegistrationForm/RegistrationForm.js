@@ -5,13 +5,11 @@ import majors from "./data/majors.json";
 
 const API_URL = process.env.API_URL;
 const STORAGE_REQUEST_URL = 'https://www.googleapis.com/upload/storage/v1/b/tamuhack-resume-data-18/o?uploadType=media&name='
-const UNIVERSITY_SEARCH_URL = 'http://universities.hipolabs.com/search?name='
 
 class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: "not loaded",
       fileName: null,
       universitySearchResult: [],
       majorSearchResult: [],
@@ -41,7 +39,6 @@ class RegistrationForm extends Component {
       .slice(0,5)
       .map(str => (str.charAt(0).toUpperCase() + str.substr(1).toLowerCase()));
 
-    console.log(result);
     this.setState({majorSearchResult: result});
   }
 
@@ -53,13 +50,10 @@ class RegistrationForm extends Component {
     }
   }
 
-  // TODO(jaykhatri) is the loading thing in state necessary?
   handleSubmit(e) {
     e.preventDefault();
-    console.log("enter");
     this.props.form.validateFields((err, values) => {
       if (err) {
-        console.log("error");
         return;
       }
       const request_url = `${API_URL}` + "/registration";
@@ -77,21 +71,14 @@ class RegistrationForm extends Component {
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
-    const firstNameError = getFieldError('first_name');
-    const lastNameError = getFieldError('last_name');
-    const email = getFieldError('email');
-
     const formItemLayout = {
       wrapperCol: { span: 14 },
     };
 
     return (
-      <Form layout="horizontal" onSubmit={this.askForConfirmation} style={{padding: "20px", width: "500px", maxWidth: "500px"}}>
+      <Form layout="horizontal" onSubmit={this.handleSubmit} style={{padding: "20px", width: "500px", maxWidth: "500px"}}>
         <p style={{fontWeight: "bold", marginBottom: "5px"}}>First Name</p>
-        <Form.Item
-          validateStatus={firstNameError ? 'error' : ''}
-          help={firstNameError || ''}
-        >
+        <Form.Item>
           {getFieldDecorator('first_name', {
             rules: [{ required: true, message: 'Please input your first name!' }],
           })(
@@ -99,10 +86,7 @@ class RegistrationForm extends Component {
           )}
         </Form.Item>
         <p style={{fontWeight: "bold", marginBottom: "5px"}}>Last Name</p>
-        <Form.Item
-          validateStatus={lastNameError ? 'error' : ''}
-          help={lastNameError || ''}
-        >
+        <Form.Item>
           {getFieldDecorator('last_name', {
             rules: [{ required: true, message: 'Please input your last name!' }],
           })(
@@ -110,10 +94,7 @@ class RegistrationForm extends Component {
           )}
         </Form.Item>
         <p style={{fontWeight: "bold", marginBottom: "5px"}}>Email</p>
-        <Form.Item
-          validateStatus={lastNameError ? 'error' : ''}
-          help={lastNameError || ''}
-        >
+        <Form.Item>
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Please input your email!' }],
           })(
