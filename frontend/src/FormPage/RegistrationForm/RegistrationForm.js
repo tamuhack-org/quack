@@ -85,7 +85,6 @@ class RegistrationForm extends Component {
       wrapperCol: { span: 14 },
     };
 
-
     return (
       <Form layout="horizontal" onSubmit={this.askForConfirmation} style={{padding: "20px", width: "500px", maxWidth: "500px"}}>
         <p style={{fontWeight: "bold", marginBottom: "5px"}}>First Name</p>
