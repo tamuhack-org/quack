@@ -199,7 +199,7 @@ class RegistrationForm extends Component {
             <Slider max={30} />
           )}
         </Form.Item>
-        <p style={{fontWeight: "bold", marginBottom: "5px"}}>Why Tamuhack?</p>
+        <p style={{fontWeight: "bold", marginBottom: "5px"}}>Why TAMUhack?</p>
         <Form.Item>
           {getFieldDecorator('why_response', {
               rules: [
